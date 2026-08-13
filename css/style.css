@@ -302,6 +302,17 @@ body.detail-page main {
   content: '· ';
 }
 
+.simple-list li a {
+  display: inline-block;
+  border-bottom: 1px solid transparent;
+}
+
+.simple-list li a:hover,
+.simple-list li a:active,
+.simple-list li a:focus-visible {
+  border-bottom-color: currentColor;
+}
+
 @media (max-width: 768px) {
   .simple-page {
     padding-top: 140px;
