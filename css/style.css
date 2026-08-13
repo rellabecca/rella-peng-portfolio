@@ -222,10 +222,10 @@ body.detail-page main {
   height: auto;
 }
 
-.detail-photos .is-portrait {
-  max-width: 29.35vw;
-}
-
+/* All photos share one width — the wider (landscape) measurement —
+   regardless of orientation, so the column reads as a single even
+   line instead of portrait photos looking narrower. */
+.detail-photos .is-portrait,
 .detail-photos .is-landscape {
   max-width: 36.65vw;
 }
