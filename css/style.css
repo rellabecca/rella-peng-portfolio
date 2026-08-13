@@ -209,7 +209,7 @@ body.detail-page main {
   padding: 0 var(--side-pad) var(--gap) 0;
   display: flex;
   flex-direction: column;
-  gap: 35px;
+  gap: 4px;
 }
 
 .detail-photos figure {
@@ -235,7 +235,7 @@ body.detail-page main {
    sharp rather than soft/blown-up. */
 .photo-pair {
   display: flex;
-  gap: 12px;
+  gap: 4px;
 }
 
 .photo-pair figure {
