@@ -263,6 +263,11 @@ body.detail-page main {
     margin-left: 0;
     padding: 0 var(--side-pad) var(--gap);
   }
+
+  .detail-photos .is-portrait,
+  .detail-photos .is-landscape {
+    max-width: 100%;
+  }
 }
 
 /* Mobile menu toggle (hamburger) — hidden on desktop */
