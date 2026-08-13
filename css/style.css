@@ -22,6 +22,8 @@ body {
   flex-direction: column;
   min-height: 100vh;
   min-height: var(--app-height, 100vh);
+  min-height: 100svh;
+  min-height: 100lvh;
 }
 
 main {
@@ -69,7 +71,6 @@ ul { margin: 0; padding: 0; list-style: none; }
 .site-nav a:active,
 .site-nav a:focus-visible {
   border-bottom-color: currentColor;
-  border-bottom-width: 0.5px;
 }
 
 /* Fills remaining viewport height and pins the track to the bottom,
@@ -158,7 +159,7 @@ body.detail-page .site-header {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 10;
+  z-index: 160;
 }
 
 body.detail-page main {
@@ -267,6 +268,7 @@ body.detail-page main {
 /* Mobile menu toggle (hamburger) — hidden on desktop */
 .menu-toggle {
   display: none;
+  position: relative;
   flex-direction: column;
   justify-content: center;
   gap: 5px;
@@ -283,10 +285,13 @@ body.detail-page main {
   width: 100%;
   height: 1px;
   background: var(--ink);
+  transition: transform 0.25s ease;
 }
 
-/* Mobile nav drawer — hidden on desktop, off-screen until opened */
-.menu-drawer {
+/* Scrim overlay for the open mobile menu — the actual page content
+   stays in place underneath, just dimmed by a 90%-opacity white layer,
+   rather than being replaced by a separate drawer screen. */
+.menu-scrim {
   display: none;
 }
 
@@ -297,76 +302,49 @@ body.detail-page main {
     --card-width: 68vw;
   }
   .logo { font-size: 24px; }
-  .site-nav { display: none; }
-  .menu-toggle { display: flex; }
+  .menu-toggle { display: flex; z-index: 210; }
+  .site-header { position: relative; z-index: 160; }
   .project-tags { height: 92px; }
   .project-tags li { font-size: 13px; }
 
-  .menu-drawer {
-    display: flex;
-    flex-direction: column;
+  .menu-scrim {
+    display: block;
     position: fixed;
     inset: 0;
-    background: #fff;
-    z-index: 200;
-    transform: translateX(100%);
-    transition: transform 0.35s ease;
-    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.9);
+    z-index: 150;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
   }
 
-  .menu-drawer.open {
-    transform: translateX(0);
+  body.menu-open .menu-scrim {
+    opacity: 1;
+    pointer-events: auto;
   }
 
-  .drawer-header {
+  body.menu-open .menu-toggle span:nth-child(1) {
+    transform: translateY(3px) rotate(45deg);
+  }
+
+  body.menu-open .menu-toggle span:nth-child(2) {
+    transform: translateY(-3px) rotate(-45deg);
+  }
+
+  /* Nav stays hidden until the menu opens, then appears top-right,
+     stacked, on top of the scrim — matching the reference exactly. */
+  .site-nav {
+    display: none;
+  }
+
+  body.menu-open .site-nav {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 46px 20px 0;
-  }
-
-  .drawer-logo {
-    font-family: var(--font-serif);
-    font-size: 24px;
-    font-weight: 400;
-  }
-
-  .drawer-close {
-    border: none;
-    background: none;
-    font-size: 32px;
-    line-height: 1;
-    color: var(--ink);
-    cursor: pointer;
-    padding: 0;
-  }
-
-  .drawer-nav {
-    display: flex;
+    position: fixed;
+    top: 22.18vh;
+    right: var(--side-pad);
     flex-direction: column;
-    gap: 28px;
-    padding: 48px 20px 40px;
-  }
-
-  .drawer-nav a {
-    font-family: var(--font-sans);
-    font-size: 20px;
-    font-weight: 400;
-    text-decoration: none;
-    display: inline-block;
-    padding-bottom: 5px;
-    border-bottom: 1px solid transparent;
-  }
-
-  .drawer-nav a:hover,
-  .drawer-nav a:active,
-  .drawer-nav a:focus-visible {
-    border-bottom-color: currentColor;
-    border-bottom-width: 0.5px;
-  }
-
-  .drawer-gallery {
-    margin-top: auto;
-    padding-top: 24px;
+    align-items: flex-end;
+    gap: 4.03vh;
+    z-index: 200;
   }
 }

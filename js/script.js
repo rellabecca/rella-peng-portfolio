@@ -66,36 +66,24 @@ if (track) {
   });
 }
 
-// Mobile nav drawer
+// Mobile nav menu — a scrim dims the real page content in place
+// (no separate drawer screen or cloned gallery).
 const menuToggle = document.getElementById('menuToggle');
-const menuDrawer = document.getElementById('menuDrawer');
-const drawerClose = document.getElementById('drawerClose');
-const drawerTrack = document.getElementById('drawerTrack');
+const menuScrim = document.getElementById('menuScrim');
 
-function openDrawer() {
-  if (track && !drawerTrack.hasChildNodes()) {
-    track.querySelectorAll('.project-card').forEach((card) => {
-      drawerTrack.appendChild(card.cloneNode(true));
-    });
-  }
-  menuDrawer.classList.add('open');
-  menuDrawer.setAttribute('aria-hidden', 'false');
-  menuToggle.setAttribute('aria-expanded', 'true');
-  document.body.style.overflow = 'hidden';
+function setMenuOpen(open) {
+  document.body.classList.toggle('menu-open', open);
+  menuToggle.setAttribute('aria-expanded', String(open));
 }
 
-function closeDrawer() {
-  menuDrawer.classList.remove('open');
-  menuDrawer.setAttribute('aria-hidden', 'true');
-  menuToggle.setAttribute('aria-expanded', 'false');
-  document.body.style.overflow = '';
-}
+menuToggle.addEventListener('click', () => {
+  setMenuOpen(!document.body.classList.contains('menu-open'));
+});
 
-menuToggle.addEventListener('click', openDrawer);
-drawerClose.addEventListener('click', closeDrawer);
+menuScrim.addEventListener('click', () => setMenuOpen(false));
 
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && menuDrawer.classList.contains('open')) {
-    closeDrawer();
+  if (e.key === 'Escape' && document.body.classList.contains('menu-open')) {
+    setMenuOpen(false);
   }
 });
