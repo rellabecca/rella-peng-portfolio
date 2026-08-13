@@ -194,7 +194,7 @@ body.detail-page main {
 
 .detail-tags li {
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 300;
   line-height: 1.5;
   color: var(--ink);
